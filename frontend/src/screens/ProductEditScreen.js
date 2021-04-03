@@ -1,31 +1,31 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Form, Button, Container } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import {Convert} from 'mongo-image-converter';
-import FormContainer from "../components/FormContainer";
-import { listProductDetails, updateProduct } from "../actions/productActions";
-import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Form, Button, Container } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { Convert } from 'mongo-image-converter';
+import FormContainer from '../components/FormContainer';
+import { listProductDetails, updateProduct } from '../actions/productActions';
+import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const [name, setName] = useState("");
-  const [owner, setOwner] = useState("");
+  const [name, setName] = useState('');
+  const [owner, setOwner] = useState('');
   const [price, setPrice] = useState(0);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState('');
   const [isLend, setLend] = useState(false);
   const [isVerified, setVerified] = useState(false);
   const [isShop, setShop] = useState(false);
-  const [condition, setCondition] = useState("");
-  const [category, setCategory] = useState("");
+  const [condition, setCondition] = useState('');
+  const [category, setCategory] = useState('');
   const [stock, setStock] = useState(0);
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
   const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ const ProductEditScreen = ({ match, history }) => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
-      history.push("/admin/productlist");
+      history.push('/admin/productlist');
     } else {
       if (!product.name || product._id !== productId) {
         dispatch(listProductDetails(productId));
@@ -66,17 +66,17 @@ const ProductEditScreen = ({ match, history }) => {
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append('image', file);
     setUploading(true);
 
     try {
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       };
 
-      const { data } = await axios.post("/api/upload", formData, config);
+      const { data } = await axios.post('/api/upload', formData, config);
 
       setImage(data);
       setUploading(false);
@@ -108,217 +108,209 @@ const ProductEditScreen = ({ match, history }) => {
 
   return (
     <>
-      <Link to="/admin/productlist" className="btn btn-light my-3">
-        <i class="fas fa-chevron-circle-left fa-3x"></i>
+      <Link to='/admin/productlist' className='btn btn-light my-3'>
+        <i class='fas fa-chevron-circle-left fa-3x'></i>
       </Link>
-      <Container className="test1">
+      <Container className='test1'>
         <FormContainer>
           <h1>Edit Product</h1>
           {loadingUpdate && <Loader />}
-          {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+          {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
           {loading ? (
             <Loader />
           ) : error ? (
-            <Message variant="danger">{error}</Message>
+            <Message variant='danger'>{error}</Message>
           ) : (
             <Form onSubmit={submitHandler}>
-              <Form.Group controlId="name">
+              <Form.Group controlId='name'>
                 <Form.Label>Name</Form.Label>
                 <Form.Control
-                  type="name"
-                  placeholder="Enter name"
+                  type='name'
+                  placeholder='Enter name'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 ></Form.Control>
               </Form.Group>
               {userInfo.isAdmin ? (
-                <Form.Group controlId="owner">
+                <Form.Group controlId='owner'>
                   <Form.Label>Owner</Form.Label>
                   <Form.Control
-                    type="name"
-                    placeholder="Enter Owner Name"
+                    type='name'
+                    placeholder='Enter Owner Name'
                     value={owner}
                     onChange={(e) => setOwner(e.target.value)}
                   ></Form.Control>
                 </Form.Group>
               ) : (
-                <Form.Group controlId="owner">
+                <Form.Group controlId='owner'>
                   <Form.Label>Owner</Form.Label>
                   <Form.Control
-                    type="name"
-                    placeholder="Enter Owner Name"
+                    type='name'
+                    placeholder='Enter Owner Name'
                     defaultvalue={userInfo.name}
                     onChange={(e) => setOwner(e.target.value)}
                   ></Form.Control>
                 </Form.Group>
               )}
 
-              <Form.Group controlId="price">
+              <Form.Group controlId='price'>
                 <Form.Label>Price</Form.Label>
                 <Form.Control
-                  type="number"
-                  placeholder="Enter price"
+                  type='number'
+                  placeholder='Enter price'
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 ></Form.Control>
               </Form.Group>
 
-              <Form.Group controlId="image">
+              <Form.Group controlId='image'>
                 <Form.Label>Image</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="Enter image url"
+                  type='text'
+                  placeholder='Enter image url'
                   value={image}
                   onChange={(e) => setImage(e.target.value)}
                 ></Form.Control>
 
                 <Form.File
-                  id="image-file"
-                  label=" Choose File"
+                  id='image-file'
+                  label=' Choose File'
                   custom
                   onChange={uploadFileHandler}
                 ></Form.File>
                 {uploading && <Loader />}
               </Form.Group>
               {userInfo.isAdmin ? (
-                <Form.Group controlId="condition">
+                <Form.Group controlId='condition'>
                   <Form.Label>Condition</Form.Label>
                   <Form.Control
-                    type="text"
-                    placeholder="Condition"
+                    type='text'
+                    placeholder='Condition'
                     value={condition}
                     onChange={(e) => setCondition(e.target.value)}
                   ></Form.Control>
                 </Form.Group>
               ) : (
-                <Form.Group controlId="condition">
-                  <Form.Label>Condition</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Condition"
-                    value={condition}
-                    onChange={(e) => setCondition(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
+                <Form.Group controlId='condition'></Form.Group>
               )}
 
-              <Form.Group controlId="stock">
+              <Form.Group controlId='stock'>
                 <Form.Label>Stock</Form.Label>
                 <Form.Control
-                  type="number"
-                  placeholder="Fill Stock Count"
+                  type='number'
+                  placeholder='Fill Stock Count'
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
                 ></Form.Control>
               </Form.Group>
 
-              <Form.Group controlId="category">
+              <Form.Group controlId='category'>
                 <Form.Label>Category</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="Enter category"
+                  type='text'
+                  placeholder='Enter category'
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 ></Form.Control>
               </Form.Group>
 
-              <Form.Group controlId="description">
+              <Form.Group controlId='description'>
                 <Form.Label>Description</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="Enter description"
+                  type='text'
+                  placeholder='Enter description'
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 ></Form.Control>
               </Form.Group>
 
               {isLend ? (
-                <Form.Group controlId="isLend">
+                <Form.Group controlId='isLend'>
                   <Form.Check
-                    size="lg"
-                    type="checkbox"
-                    placeholder="Loan"
+                    size='lg'
+                    type='checkbox'
+                    placeholder='Loan'
                     value={isLend}
                     onChange={(e) => setLend(e.target.checked ? true : false)}
-                    label="Loan Option"
+                    label='Loan Option'
                     checked
                   />
                 </Form.Group>
               ) : (
-                <Form.Group controlId="isLend">
+                <Form.Group controlId='isLend'>
                   <Form.Check
-                    size="lg"
-                    type="checkbox"
-                    placeholder="Loan"
+                    size='lg'
+                    type='checkbox'
+                    placeholder='Loan'
                     value={isLend}
                     onChange={(e) => setLend(e.target.checked ? true : false)}
-                    label="Loan Option"
+                    label='Loan Option'
                   />
                 </Form.Group>
               )}
 
               {userInfo.isAdmin ? (
                 isShop ? (
-                  <Form.Group controlId="isShop">
+                  <Form.Group controlId='isShop'>
                     <Form.Check
-                      size="lg"
-                      type="checkbox"
-                      placeholder="Shop Registration"
+                      size='lg'
+                      type='checkbox'
+                      placeholder='Shop Registration'
                       value={isShop}
                       onChange={(e) => setShop(e.target.checked ? true : false)}
                       checked
-                      label="Shop Registration"
+                      label='Shop Registration'
                     />
                   </Form.Group>
                 ) : (
-                  <Form.Group controlId="isShop">
+                  <Form.Group controlId='isShop'>
                     <Form.Check
-                      size="lg"
-                      type="checkbox"
-                      placeholder="Shop Registration"
+                      size='lg'
+                      type='checkbox'
+                      placeholder='Shop Registration'
                       value={isShop}
                       onChange={(e) => setShop(e.target.checked ? true : false)}
-                      label="Shop Registration"
+                      label='Shop Registration'
                     />
                   </Form.Group>
                 )
               ) : (
-                <Form.Group controlId="isVerified"></Form.Group>
+                <Form.Group controlId='isVerified'></Form.Group>
               )}
               {userInfo.isAdmin ? (
                 isVerified ? (
-                  <Form.Group controlId="isVerified">
+                  <Form.Group controlId='isVerified'>
                     <Form.Check
-                      size="lg"
-                      type="checkbox"
-                      placeholder="Verification"
+                      size='lg'
+                      type='checkbox'
+                      placeholder='Verification'
                       value={isVerified}
                       onChange={(e) =>
                         setVerified(e.target.checked ? true : false)
                       }
-                      label=" Verification Status"
+                      label=' Verification Status'
                       checked
                     />
                   </Form.Group>
                 ) : (
-                  <Form.Group controlId="isVerified">
+                  <Form.Group controlId='isVerified'>
                     <Form.Check
-                      size="lg"
-                      type="checkbox"
-                      placeholder="Verification"
+                      size='lg'
+                      type='checkbox'
+                      placeholder='Verification'
                       value={isVerified}
                       onChange={(e) =>
                         setVerified(e.target.checked ? true : false)
                       }
-                      label=" Verification Status"
+                      label=' Verification Status'
                     />
                   </Form.Group>
                 )
               ) : (
-                <Form.Group controlId="isVerified"></Form.Group>
+                <Form.Group controlId='isVerified'></Form.Group>
               )}
 
-              <Button type="submit" variant="primary" >
+              <Button type='submit' variant='primary' className='btn-p'>
                 Update
               </Button>
             </Form>

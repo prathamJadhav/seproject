@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button, Container } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { listUsers, deleteUser } from "../actions/userActions";
+import React, { useEffect } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Table, Button, Container } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { listUsers, deleteUser } from '../actions/userActions';
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -22,27 +22,27 @@ const UserListScreen = ({ history }) => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listUsers());
     } else {
-      history.push("/login");
+      history.push('/login');
     }
   }, [dispatch, history, successDelete, userInfo]);
 
   const deleteHandler = (id) => {
-    if (window.confirm("Are you sure")) {
+    if (window.confirm('Are you sure')) {
       dispatch(deleteUser(id));
     }
   };
 
   return (
     <>
-      <Container className="test2">
+      <Container className='test2'>
         <h1>Users</h1>
         {loading ? (
           <Loader />
         ) : error ? (
-          <Message variant="danger">{error}</Message>
+          <Message variant='danger'>{error}</Message>
         ) : (
-          <Table striped bordered hover responsive className="table-sm">
-            <thead className="sample">
+          <Table striped bordered hover responsive className='table-sm'>
+            <thead className='sample'>
               <tr>
                 <th>ID</th>
                 <th>NAME</th>
@@ -62,17 +62,17 @@ const UserListScreen = ({ history }) => {
 
                   <td>
                     <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                      <Button variant="light" className="btn-sm">
-                        <i class="fa fa-cog fa-spin fa-2x fa-fw"></i>
-                        <span class="sr-only">Loading...</span>
+                      <Button variant='light' className='btn-sm'>
+                        <i class='fa fa-cog fa-spin fa-2x fa-fw'></i>
+                        <span class='sr-only'>Loading...</span>
                       </Button>
                     </LinkContainer>
                     <Button
-                      variant="danger"
-                      className="btn-sm"
+                      variant='danger'
+                      className='btn-sm'
                       onClick={() => deleteHandler(user._id)}
                     >
-                      <i class="far fa-trash-alt fa-2x"></i>
+                      <i class='far fa-trash-alt fa-2x'></i>
                     </Button>
                   </td>
                 </tr>

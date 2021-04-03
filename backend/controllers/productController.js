@@ -65,7 +65,7 @@ const createProduct = asyncHandler(async (req, res) => {
     isLend:false,
     user: req.user._id,
     image: '/images/dummy.png',
-    condition: 'Check up Pending',
+    condition: 'Unverified',
     category: 'Sample category',
     stock: 0,
     revreviewCountiew: 0,

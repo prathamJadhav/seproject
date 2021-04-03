@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Row,
   Col,
@@ -9,21 +9,22 @@ import {
   Card,
   Button,
   Form,
-} from "react-bootstrap";
-import Rating from "../components/Rating";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import Meta from "../components/Meta";
+  icons,
+} from 'react-bootstrap';
+import Rating from '../components/Rating';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import Meta from '../components/Meta';
 import {
   listProductDetails,
   createProductReview,
-} from "../actions/productActions";
-import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
+} from '../actions/productActions';
+import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
 
   const dispatch = useDispatch();
 
@@ -43,7 +44,7 @@ const ProductScreen = ({ history, match }) => {
   useEffect(() => {
     if (successProductReview) {
       setRating(0);
-      setComment("");
+      setComment('');
     }
     if (!product._id || product._id !== match.params.id) {
       dispatch(listProductDetails(match.params.id));
@@ -67,43 +68,41 @@ const ProductScreen = ({ history, match }) => {
 
   return (
     <>
-      <Link className="btn btn-light my-3" to="/">
-      
-      <i class="fas fa-chevron-circle-left fa-3x"></i>
-         
+      <Link className='btn btn-light my-3' to='/'>
+        <i class='fas fa-chevron-circle-left fa-3x'></i>
       </Link>
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant="Warning">{error}</Message>
+        <Message variant='Warning'>{error}</Message>
       ) : (
         <>
           <Meta title={product.name} />
           <Row>
             <Col md={4}>
-              <ListGroup variant="flush">
+              <ListGroup variant='flush'>
                 <ListGroup.Item>
                   <h3>{product.name}</h3>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
-                    <Col className="sample">Description : </Col>
+                    <Col className='sample'>Description : </Col>
                     <Col> {product.description} </Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
-                    <Col className="sample">Available :</Col>
+                    <Col className='sample'>Available :</Col>
                     <Col>
                       {product.stock > 0 ? (
-                        <Button className="btn-circle2">
-                          <i class="fa fa-check" aria-hidden="true"></i>
+                        <Button className='btn-circle2'>
+                          <i class='fa fa-check' aria-hidden='true'></i>
                         </Button>
                       ) : (
-                        <Button className="btn-circle3">
-                          <i class="fa fa-times" aria-hidden="true"></i>
+                        <Button className='btn-circle3'>
+                          <i class='fa fa-times' aria-hidden='true'></i>
                         </Button>
                       )}
                     </Col>
@@ -111,39 +110,73 @@ const ProductScreen = ({ history, match }) => {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col className="sample">Owner :</Col>
+                    <Col className='sample'>Owner :</Col>
                     <Col>
                       {product.isShop ? (
-                        <i class="fas fa-store "> </i>
+                        <i class='fas fa-store '> </i>
                       ) : (
-                        <i className="fas fa-user"></i>
+                        <i className='fas fa-user'></i>
                       )}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      {product.owner}
                     </Col>
-                    <Col>{product.owner}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col className='sample'>Certification :</Col>
+                    <Col>
+                      {product.isVerified ? (
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          width='16'
+                          height='16'
+                          fill='currentColor'
+                          class='bi bi-shield-fill-check'
+                          viewBox='0 0 16 16'
+                        >
+                          <path
+                            fill-rule='evenodd'
+                            d='M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z'
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          width='16'
+                          height='16'
+                          fill='currentColor'
+                          class='bi bi-exclamation-circle-fill'
+                          viewBox='0 0 16 16'
+                        >
+                          <path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z' />
+                        </svg>
+                      )}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      {product.condition}
+                    </Col>
                   </Row>
                 </ListGroup.Item>
               </ListGroup>
             </Col>
             <Col md={2}></Col>
-            <Col  xs={6} md={4} >
-             
-                <Image src={product.image} alt={product.name} fluid /> 
-             
+            <Col xs={6} md={4}>
+              <Image src={product.image} alt={product.name} fluid />
             </Col>
           </Row>
 
-          <Row className="row1"></Row>
+          <Row className='row1'></Row>
 
           <Row>
             <Col md={4}>
               <Card>
-                <ListGroup class="list-group list-group-flush">
+                <ListGroup class='list-group list-group-flush'>
                   <ListGroup.Item>
                     <Row>
-                      <Col className="sample">Price :</Col>
+                      <Col className='sample'>Price :</Col>
                       <Col>
                         <strong>
-                          <i class="fas fa-rupee-sign"></i> {product.price}
+                          <i class='fas fa-rupee-sign'></i> {product.price}
                         </strong>
                       </Col>
                     </Row>
@@ -151,7 +184,7 @@ const ProductScreen = ({ history, match }) => {
 
                   <ListGroup.Item>
                     <Row>
-                      <Col className="sample">Ratings :</Col>
+                      <Col className='sample'>Ratings :</Col>
                       <Col>
                         <Rating value={product.rating} />
                       </Col>
@@ -161,10 +194,10 @@ const ProductScreen = ({ history, match }) => {
                   {product.stock > 0 && (
                     <ListGroup.Item>
                       <Row>
-                        <Col className="sample">Qty :</Col>
+                        <Col className='sample'>Qty :</Col>
                         <Col>
                           <Form.Control
-                            as="select"
+                            as='select'
                             value={qty}
                             onChange={(e) => setQty(e.target.value)}
                           >
@@ -186,22 +219,22 @@ const ProductScreen = ({ history, match }) => {
                       <Col>
                         <Button
                           onClick={addToCartHandler}
-                          className="btn-cart"
-                          type="button"
+                          className='btn-cart'
+                          type='button'
                           disabled={product.stock === 0}
                         >
-                          <i class="fas fa-shopping-cart  fa-1x"></i>
+                          <i class='fas fa-shopping-cart  fa-1x'></i>
                           &nbsp; Cart
                         </Button>
                       </Col>
                       <Col>
                         <Button
                           onClick={addToCartHandler}
-                          className="btn-loan"
-                          type="button"
+                          className='btn-loan'
+                          type='button'
                           disabled={!product.isLend}
                         >
-                          <i class="fas fa-money-check fa-1x"></i>
+                          <i class='fas fa-money-check fa-1x'></i>
                           &nbsp; Apply For Loan
                         </Button>
                       </Col>
@@ -211,7 +244,6 @@ const ProductScreen = ({ history, match }) => {
               </Card>
             </Col>
             <Col md={1}></Col>
-            
           </Row>
         </>
       )}
