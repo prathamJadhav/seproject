@@ -34,28 +34,43 @@ const Header = () => {
                   <i className='fas fa-shopping-cart'></i> Cart
                 </Nav.Link>
               </LinkContainer>
-              {/* {userInfo ? (
-                <LinkContainer to='/profile'>
-                  <Nav.Link>
-                    <Image
-                      className='profileIcon'
-                      src={userInfo.profileImage}
-                      alt={userInfo.name}
-                      fluid
-                    />
-                  </Nav.Link>
-                </LinkContainer>
-                
-              ) : (
-                <LinkContainer to='/login'></LinkContainer>
-              )} */}
+
+              <LinkContainer to='/admin/productlist'>
+                <Nav.Link>
+                  <i class='far fa-address-book'></i> My Products
+                </Nav.Link>
+              </LinkContainer>
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown
+                  title={<i class='fas fa-users-cog'></i>}
+                  id='adminmenu'
+                >
+                  <LinkContainer to='/admin/userlist'>
+                    <NavDropdown.Item>
+                      <i class='fas fa-users'></i> Users
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/admin/productlist'>
+                    <NavDropdown.Item>
+                      <i class='fas fa-cart-plus'></i> Products
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/admin/orderlist'>
+                    <NavDropdown.Item>
+                      <i class='fas fa-luggage-cart'></i> Orders
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
+              )}
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
                   <LinkContainer to='/profile'>
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <i class='far fa-user'></i> Profile
+                    </NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
+                    <i class='fas fa-sign-out-alt'></i> Logout
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
@@ -64,24 +79,6 @@ const Header = () => {
                     <i className='fas fa-user'></i> Sign In
                   </Nav.Link>
                 </LinkContainer>
-              )}
-              <LinkContainer to='/admin/productlist'>
-                <Nav.Link>
-                  <i class='far fa-address-book'></i> My Products
-                </Nav.Link>
-              </LinkContainer>
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title='Admin' id='adminmenu'>
-                  <LinkContainer to='/admin/userlist'>
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to='/admin/productlist'>
-                    <NavDropdown.Item>Products</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to='/admin/orderlist'>
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
               )}
             </Nav>
           </Navbar.Collapse>

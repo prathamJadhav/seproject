@@ -9,7 +9,6 @@ import {
   Card,
   Button,
   Form,
-  icons,
 } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import Message from '../components/Message';
@@ -35,11 +34,7 @@ const ProductScreen = ({ history, match }) => {
   const { userInfo } = userLogin;
 
   const productReviewCreate = useSelector((state) => state.productReviewCreate);
-  const {
-    success: successProductReview,
-    loading: loadingProductReview,
-    error: errorProductReview,
-  } = productReviewCreate;
+  const { success: successProductReview } = productReviewCreate;
 
   useEffect(() => {
     if (successProductReview) {
