@@ -116,7 +116,7 @@ if (!cart.paymentMethod) {
               <ListGroup.Item>
                 <Button
                   type='button'
-                  className='btn-block'
+                  className='btn-dl'
                   disabled={cart.cartItems === 0}
                   onClick={placeOrderHandler}
                 >

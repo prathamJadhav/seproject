@@ -17,11 +17,11 @@ const Product = ({ product }) => {
           </Card.Title>
         </Link>
 
-        <Card.Text as='div'>
+        {/* <Card.Text as='div'>
           <Rating value={product.rating} text={`${product.reviews} reviews`} />
-        </Card.Text>
+        </Card.Text> */}
 
-        <Card.Text as='h3'>RS {product.price}</Card.Text>
+        <Card.Text as='h3'><i class='fas fa-rupee-sign'></i> {product.price}</Card.Text>
       </Card.Body>
     </Card>
   );

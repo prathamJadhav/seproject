@@ -2,7 +2,6 @@ import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
 import User from '../models/userModel.js';
 
-
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -16,6 +15,8 @@ const authUser = asyncHandler(async (req, res) => {
       profileImage: user.profileImage,
       roomnumber: user.roomnumber,
       isAdmin: user.isAdmin,
+      isMod: user.isMod,
+      isDM: user.isDM,
       token: generateToken(user._id),
     });
   } else {
@@ -23,7 +24,6 @@ const authUser = asyncHandler(async (req, res) => {
     throw new Error('Invalid email or password');
   }
 });
-
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, profileImage, roomnumber, password } = req.body;
@@ -51,6 +51,8 @@ const registerUser = asyncHandler(async (req, res) => {
       profileImage: user.profileImage,
       roomnumber: user.roomnumber,
       isAdmin: user.isAdmin,
+      isMod: user.isMod,
+      isDM: user.isDM,
       token: generateToken(user._id),
     });
   } else {
@@ -58,7 +60,6 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('Invalid user data');
   }
 });
-
 
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -71,6 +72,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
       email: user.email,
       roomnumber: user.roomnumber,
       isAdmin: user.isAdmin,
+      isMod: user.isMod,
+      isDM: user.isDM,
     });
   } else {
     res.status(404);
@@ -99,6 +102,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       email: updatedUser.email,
       roomnumber: updatedUser.roomnumber,
       isAdmin: updatedUser.isAdmin,
+      isMod: updatedUser.isMod,
+      isDM: updatedUser.isDM,
       token: generateToken(updatedUser._id),
     });
   } else {
@@ -107,12 +112,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
   res.json(users);
 });
-
 
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
@@ -126,7 +129,6 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 });
 
-
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select('-password');
 
@@ -138,7 +140,6 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
-
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
@@ -148,6 +149,8 @@ const updateUser = asyncHandler(async (req, res) => {
     user.profileImage = req.body.profileImage || user.profileImage;
     user.roomnumber = req.body.roomnumber || user.roomnumber;
     user.isAdmin = req.body.isAdmin;
+    user.isMod = req.body.isMod;
+    user.isDM = req.body.isDM;
 
     const updatedUser = await user.save();
 
@@ -158,6 +161,8 @@ const updateUser = asyncHandler(async (req, res) => {
       profileImage: updatedUser.profileImage,
       roomnumber: updatedUser.roomnumber,
       isAdmin: updatedUser.isAdmin,
+      isMod: updatedUser.isMod,
+      isDM: updatedUser.isDM,
     });
   } else {
     res.status(404);

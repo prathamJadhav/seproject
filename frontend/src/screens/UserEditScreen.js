@@ -16,11 +16,16 @@ const UserEditScreen = ({ match, history }) => {
   const [profileImage, setprofileImage] = useState('');
   const [roomnumber, setRoom] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isMod, setIsMod] = useState(false);
+  const [isDM, setIsDM] = useState(false);
 
   const dispatch = useDispatch();
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const userUpdate = useSelector((state) => state.userUpdate);
   const {
@@ -42,6 +47,8 @@ const UserEditScreen = ({ match, history }) => {
         setprofileImage(user.profileImage);
         setRoom(user.roomnumber);
         setIsAdmin(user.isAdmin);
+        setIsMod(user.isMod);
+        setIsDM(user.isDM);
       }
     }
   }, [dispatch, history, userId, user, successUpdate]);
@@ -56,6 +63,8 @@ const UserEditScreen = ({ match, history }) => {
         profileImage,
         roomnumber,
         isAdmin,
+        isMod,
+        isDM,
       })
     );
   };
@@ -105,12 +114,36 @@ const UserEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='isadmin'>
+            {userInfo.isAdmin ? (
+              <Form.Group controlId='isadmin'>
+                <Form.Check
+                  type='checkbox'
+                  label='* Grant Admin Access'
+                  checked={isAdmin}
+                  onChange={(e) => setIsAdmin(e.target.checked)}
+                ></Form.Check>
+              </Form.Group>
+            ) : (
+              <></>
+            )}
+            {userInfo.isAdmin ? (
+              <Form.Group controlId='ismod'>
+                <Form.Check
+                  type='checkbox'
+                  label='Moderator Access'
+                  checked={isMod}
+                  onChange={(e) => setIsMod(e.target.checked)}
+                ></Form.Check>
+              </Form.Group>
+            ) : (
+              <></>
+            )}
+            <Form.Group controlId='isdm'>
               <Form.Check
                 type='checkbox'
-                label='Moderator Access'
-                checked={isAdmin}
-                onChange={(e) => setIsAdmin(e.target.checked)}
+                label='Appoint Delievery Man'
+                checked={isDM}
+                onChange={(e) => setIsDM(e.target.checked)}
               ></Form.Check>
             </Form.Group>
 

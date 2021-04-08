@@ -19,7 +19,7 @@ const UserListScreen = ({ history }) => {
   const { success: successDelete } = userDelete;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
+    if (userInfo && (userInfo.isAdmin || userInfo.isMod)) {
       dispatch(listUsers());
     } else {
       history.push('/login');
@@ -47,36 +47,103 @@ const UserListScreen = ({ history }) => {
                 <th>ID</th>
                 <th>NAME</th>
                 <th>EMAIL</th>
-
-                <th></th>
+                <th>Role</th>
+               
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td>{user._id}</td>
-                  <td>{user.name}</td>
-                  <td>
-                    <a href={`mailto:${user.email}`}>{user.email}</a>
-                  </td>
-
-                  <td>
-                    <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                      <Button variant='light' className='btn-sm'>
-                        <i class='fa fa-cog fa-spin fa-2x fa-fw'></i>
-                        <span class='sr-only'>Loading...</span>
-                      </Button>
-                    </LinkContainer>
-                    <Button
-                      variant='danger'
-                      className='btn-sm'
-                      onClick={() => deleteHandler(user._id)}
-                    >
-                      <i class='far fa-trash-alt fa-2x'></i>
-                    </Button>
-                  </td>
-                </tr>
-              ))}
+              {userInfo.isAdmin
+                ? users.map((user) => (
+                    <tr key={user._id}>
+                      <td>{user._id}</td>
+                      <td>{user.name}</td>
+                      <td>
+                        <a href={`mailto:${user.email}`}>{user.email}</a>
+                      </td>
+                      <td>
+                        {user.isAdmin ? (
+                          <i
+                            class='fas fa-user-shield'
+                            style={{ color: 'purple' }}
+                          ></i>
+                        ) : user.isMod ? (
+                          <i
+                            class='fas fa-users-cog'
+                            style={{ color: 'deepskyblue' }}
+                          ></i>
+                        ) : user.isDM ? (
+                          <i
+                            class='fas fa-biking'
+                            style={{ color: 'forestgreen' }}
+                          ></i>
+                        ) : (
+                          <i
+                            class='fas fa-user-minus'
+                            style={{ color: 'red' }}
+                          ></i>
+                        )}
+                      </td>
+                      <td>
+                        <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                          <Button variant='light' className='btn-sm'>
+                            <i class='fa fa-cog fa-spin fa-2x fa-fw'></i>
+                            <span class='sr-only'>Loading...</span>
+                          </Button>
+                        </LinkContainer>
+                      </td>
+                      <td>
+                        <Button
+                          variant='danger'
+                          className='btn-sm'
+                          onClick={() => deleteHandler(user._id)}
+                        >
+                          <i class='far fa-trash-alt fa-2x'></i>
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                : users
+                    .filter((user) => user.isAdmin === false)
+                    .filter((user) => user.isMod === false)
+                    .map((user) => (
+                      <tr key={user._id}>
+                        <td>{user._id}</td>
+                        <td>{user.name}</td>
+                        <td>
+                          <a href={`mailto:${user.email}`}>{user.email}</a>
+                        </td>
+                        <td>
+                         { user.isDM ? (
+                          <i
+                            class='fas fa-biking'
+                            style={{ color: 'green' }}
+                          ></i>
+                          ) : (
+                          <i
+                            class='fas fa-user-minus'
+                            style={{ color: 'red' }}
+                          ></i>
+                          )}
+                        </td>
+                        <td>
+                          <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                            <Button variant='light' className='btn-sm'>
+                              <i class='fa fa-cog fa-spin fa-2x fa-fw'></i>
+                              <span class='sr-only'>Loading...</span>
+                            </Button>
+                          </LinkContainer>
+                        </td>
+                        <td>
+                          <Button
+                            variant='danger'
+                            className='btn-sm'
+                            onClick={() => deleteHandler(user._id)}
+                          >
+                            <i class='far fa-trash-alt fa-2x'></i>
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
             </tbody>
           </Table>
         )}

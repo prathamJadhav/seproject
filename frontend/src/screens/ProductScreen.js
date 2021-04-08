@@ -177,64 +177,63 @@ const ProductScreen = ({ history, match }) => {
                     </Row>
                   </ListGroup.Item>
 
-                  <ListGroup.Item>
-                    <Row>
-                      <Col className='sample'>Ratings :</Col>
-                      <Col>
-                        <Rating value={product.rating} />
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
+                  {userInfo.isAdmin || userInfo.isDM || userInfo.isMod ? (
+                    <></>
+                  ) : (
+                    product.stock > 0 && (
+                      <ListGroup.Item>
+                        <Row>
+                          <Col className='sample'>Qty :</Col>
+                          <Col>
+                            <Form.Control
+                              as='select'
+                              value={qty}
+                              onChange={(e) => setQty(e.target.value)}
+                            >
+                              {[...Array(product.countInStock).keys()].map(
+                                (x) => (
+                                  <option key={x + 1} value={x + 1}>
+                                    {x + 1}
+                                  </option>
+                                )
+                              )}
+                            </Form.Control>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                    )
+                  )}
 
-                  {product.stock > 0 && (
+                  {userInfo.isAdmin || userInfo.isDM || userInfo.isMod ? (
+                    <></>
+                  ) : (
                     <ListGroup.Item>
                       <Row>
-                        <Col className='sample'>Qty :</Col>
                         <Col>
-                          <Form.Control
-                            as='select'
-                            value={qty}
-                            onChange={(e) => setQty(e.target.value)}
+                          <Button
+                            onClick={addToCartHandler}
+                            className='btn-cart'
+                            type='button'
+                            disabled={product.stock === 0}
                           >
-                            {[...Array(product.countInStock).keys()].map(
-                              (x) => (
-                                <option key={x + 1} value={x + 1}>
-                                  {x + 1}
-                                </option>
-                              )
-                            )}
-                          </Form.Control>
+                            <i class='fas fa-shopping-cart  fa-1x'></i>
+                            &nbsp; Cart
+                          </Button>
+                        </Col>
+                        <Col>
+                          <Button
+                            onClick={addToCartHandler}
+                            className='btn-loan'
+                            type='button'
+                            disabled={!product.isLend}
+                          >
+                            <i class='fas fa-money-check fa-1x'></i>
+                            &nbsp; Apply For Loan
+                          </Button>
                         </Col>
                       </Row>
                     </ListGroup.Item>
                   )}
-
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>
-                        <Button
-                          onClick={addToCartHandler}
-                          className='btn-cart'
-                          type='button'
-                          disabled={product.stock === 0}
-                        >
-                          <i class='fas fa-shopping-cart  fa-1x'></i>
-                          &nbsp; Cart
-                        </Button>
-                      </Col>
-                      <Col>
-                        <Button
-                          onClick={addToCartHandler}
-                          className='btn-loan'
-                          type='button'
-                          disabled={!product.isLend}
-                        >
-                          <i class='fas fa-money-check fa-1x'></i>
-                          &nbsp; Apply For Loan
-                        </Button>
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
                 </ListGroup>
               </Card>
             </Col>

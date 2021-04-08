@@ -92,7 +92,7 @@ const ProductListScreen = ({ history, match }) => {
           <>
             <Table striped bordered hover responsive className='table-sm'>
               <thead className='sample'>
-                {userInfo.isAdmin ? (
+                {userInfo.isAdmin || userInfo.isMod ? (
                   <tr>
                     <th>PRODUCT ID</th>
                     <th>PRODUCT NAME</th>
@@ -117,7 +117,7 @@ const ProductListScreen = ({ history, match }) => {
               </thead>
 
               <tbody>
-                {userInfo.isAdmin
+                {userInfo.isAdmin || userInfo.isMod
                   ? products.map((product) => (
                       <tr key={product._id}>
                         <td>{product._id}</td>

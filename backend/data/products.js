@@ -83,7 +83,7 @@ const products = [
     name: 'Legion Gaming Mouse',
     owner:'utkarsh',
     image: '/images/legionmouse.jpg',
-    condition:'Average',
+    condition:'Not Certified',
     description:
       '6 trigger Gaming mouse for better gaming experience',
     isShop: false,

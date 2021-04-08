@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Row,
   Col,
@@ -8,19 +8,19 @@ import {
   Card,
   Button,
   Table,
-} from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
+} from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 import {
   getOrderDetails,
   payOrder,
   deliverOrder,
-} from "../actions/orderActions";
+} from '../actions/orderActions';
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
-} from "../constants/orderConstants";
+} from '../constants/orderConstants';
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id;
@@ -51,7 +51,7 @@ const OrderScreen = ({ match, history }) => {
 
   useEffect(() => {
     if (!userInfo) {
-      history.push("/login");
+      history.push('/login');
     }
 
     if (!order || successPay || successDeliver || order._id !== orderId) {
@@ -73,19 +73,19 @@ const OrderScreen = ({ match, history }) => {
   return loading ? (
     <Loader />
   ) : error ? (
-    <Message variant="danger">{error}</Message>
+    <Message variant='danger'>{error}</Message>
   ) : (
     <>
       <Row>
         <Col md={8}>
-          <ListGroup variant="flush">
+          <ListGroup variant='flush'>
             <ListGroup.Item>
               <h2>Delivery Details</h2>
               <p>
                 <strong>Name: </strong> {order.user.name}
               </p>
               <p>
-                <strong>Email: </strong>{" "}
+                <strong>Email: </strong>{' '}
                 <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
               </p>
               <p>
@@ -93,11 +93,11 @@ const OrderScreen = ({ match, history }) => {
                 {order.user.roomnumber}
               </p>
               {order.isDelivered ? (
-                <Message variant="success">
+                <Message variant='success'>
                   Delivered on {order.deliveredAt}
                 </Message>
               ) : (
-                <Message variant="danger">Not Delivered</Message>
+                <Message variant='danger'>Not Delivered</Message>
               )}
             </ListGroup.Item>
 
@@ -114,8 +114,8 @@ const OrderScreen = ({ match, history }) => {
               {order.orderItems.length === 0 ? (
                 <Message>Order is empty</Message>
               ) : (
-                <Table striped bordered hover responsive className="table-sm">
-                  <thead className="sample">
+                <Table striped bordered hover responsive className='table-sm'>
+                  <thead className='sample'>
                     <tr>
                       <th>PRODUCT </th>
                       <th>PRODUCT NAME</th>
@@ -132,7 +132,7 @@ const OrderScreen = ({ match, history }) => {
                           <Image
                             src={item.image}
                             alt={item.name}
-                            className="order-image"
+                            className='order-image'
                           />
                         </td>
                         <td>
@@ -143,8 +143,8 @@ const OrderScreen = ({ match, history }) => {
                         <td>{item.qty} </td>
                         <td>{item.price} </td>
                         <td>
-                          {" "}
-                          <i class="fas fa-rupee-sign"></i>{" "}
+                          {' '}
+                          <i class='fas fa-rupee-sign'></i>{' '}
                           {item.qty * item.price}
                         </td>
                       </tr>
@@ -157,7 +157,7 @@ const OrderScreen = ({ match, history }) => {
         </Col>
         <Col md={4}>
           <Card>
-            <ListGroup variant="flush">
+            <ListGroup variant='flush'>
               <ListGroup.Item>
                 <h2>Order Summary</h2>
               </ListGroup.Item>
@@ -166,23 +166,27 @@ const OrderScreen = ({ match, history }) => {
                 <Row>
                   <Col>Total</Col>
                   <Col>
-                    <i class="fas fa-rupee-sign"></i> {order.totalPrice}
+                    <i class='fas fa-rupee-sign'></i> {order.totalPrice}
                   </Col>
                 </Row>
               </ListGroup.Item>
 
               {loadingDeliver && <Loader />}
               {userInfo &&
-                userInfo.isAdmin &&
+                (userInfo.isAdmin || userInfo.isMod || userInfo.isDM) &&
                 order.isPaid &&
                 !order.isDelivered && (
                   <ListGroup.Item>
                     <Button
-                      type="button"
-                      className="btn btn-block"
+                      type='button'
+                      className='btn-dl'
                       onClick={deliverHandler}
                     >
-                      Mark As Delivered
+                      <i
+                        class='fas fa-truck-loading'
+                       // style={{ color: 'deepskyblue' }}
+                      ></i>
+                        &nbsp;  &nbsp;   Delivered
                     </Button>
                   </ListGroup.Item>
                 )}

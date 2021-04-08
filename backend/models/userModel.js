@@ -29,6 +29,16 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    isMod: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isDM: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
     timestamps: true,
