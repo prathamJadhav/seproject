@@ -20,24 +20,36 @@ const Header = () => {
     <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
-          <LinkContainer to='/'>
-            <Navbar.Brand>
-              <i class='fa fa-home' fa-4x></i>
-            </Navbar.Brand>
-          </LinkContainer>
+          {userInfo != null ? (
+            <LinkContainer to='/'>
+              <Navbar.Brand>
+                <i class='fa fa-home' fa-4x></i>
+              </Navbar.Brand>
+            </LinkContainer>
+          ) : (
+            <></>
+          )}
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-            <Route render={({ history }) => <SearchBox history={history} />} />
+            {userInfo != null ? (
+              <Route
+                render={({ history }) => <SearchBox history={history} />}
+              />
+            ) : (
+              <></>
+            )}
             <Nav className='ml-auto'>
               {userInfo &&
               (userInfo.isAdmin || userInfo.isDM || userInfo.isMod) ? (
                 <></>
-              ) : (
+              ) : userInfo != null ? (
                 <LinkContainer to='/cart'>
                   <Nav.Link>
                     <i className='fas fa-shopping-cart'></i> Cart
                   </Nav.Link>
                 </LinkContainer>
+              ) : (
+                <></>
               )}
 
               {userInfo && userInfo.isDM ? (
@@ -48,12 +60,14 @@ const Header = () => {
                 </LinkContainer>
               ) : userInfo && (userInfo.isAdmin || userInfo.isMod) ? (
                 <></>
-              ) : (
+              ) : userInfo != null ? (
                 <LinkContainer to='/admin/productlist'>
                   <Nav.Link>
                     <i class='far fa-address-book'></i> My Products
                   </Nav.Link>
                 </LinkContainer>
+              ) : (
+                <></>
               )}
               {userInfo && (userInfo.isAdmin || userInfo.isMod) && (
                 <NavDropdown
