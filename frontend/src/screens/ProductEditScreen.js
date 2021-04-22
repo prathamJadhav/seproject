@@ -111,9 +111,9 @@ const ProductEditScreen = ({ match, history }) => {
       <Link to='/admin/productlist' className='btn btn-light my-3'>
         <i class='fas fa-chevron-circle-left fa-3x'></i>
       </Link>
-      <Container className='test1'>
+      <Container className='test3'>
         <FormContainer>
-          <h1>Edit Product</h1>
+          <h1>Product Details</h1>
           {loadingUpdate && <Loader />}
           {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
           {loading ? (
@@ -123,7 +123,7 @@ const ProductEditScreen = ({ match, history }) => {
           ) : (
             <Form onSubmit={submitHandler}>
               <Form.Group controlId='name'>
-                <Form.Label>Name</Form.Label>
+                <Form.Label className='sample' >Name : </Form.Label>
                 <Form.Control
                   type='name'
                   placeholder='Enter name'
@@ -133,7 +133,7 @@ const ProductEditScreen = ({ match, history }) => {
               </Form.Group>
               {userInfo.isAdmin ? (
                 <Form.Group controlId='owner'>
-                  <Form.Label>Owner</Form.Label>
+                  <Form.Label  className='sample'>Owner :</Form.Label>
                   <Form.Control
                     type='name'
                     placeholder='Enter Owner Name'
@@ -143,7 +143,7 @@ const ProductEditScreen = ({ match, history }) => {
                 </Form.Group>
               ) : (
                 <Form.Group controlId='owner'>
-                  <Form.Label>Owner</Form.Label>
+                  <Form.Label className='sample'>Owner :</Form.Label>
                   <Form.Control
                     type='name'
                     placeholder='Enter Owner Name'
@@ -154,7 +154,7 @@ const ProductEditScreen = ({ match, history }) => {
               )}
 
               <Form.Group controlId='price'>
-                <Form.Label>Price</Form.Label>
+                <Form.Label className='sample'>Price :</Form.Label>
                 <Form.Control
                   type='number'
                   placeholder='Enter price'
@@ -164,7 +164,7 @@ const ProductEditScreen = ({ match, history }) => {
               </Form.Group>
 
               <Form.Group controlId='image'>
-                <Form.Label>Image</Form.Label>
+                <Form.Label className='sample'>Image :</Form.Label>
                 <Form.Control
                   type='text'
                   placeholder='Enter image url'
@@ -182,7 +182,7 @@ const ProductEditScreen = ({ match, history }) => {
               </Form.Group>
               {userInfo.isAdmin ? (
                 <Form.Group controlId='condition'>
-                  <Form.Label>Condition</Form.Label>
+                  <Form.Label className='sample'>Condition :</Form.Label>
                   <Form.Control
                     type='text'
                     placeholder='Condition'
@@ -191,11 +191,11 @@ const ProductEditScreen = ({ match, history }) => {
                   ></Form.Control>
                 </Form.Group>
               ) : (
-                <Form.Group controlId='condition'></Form.Group>
+                <></>
               )}
 
               <Form.Group controlId='stock'>
-                <Form.Label>Stock</Form.Label>
+                <Form.Label className='sample' >Stock :</Form.Label>
                 <Form.Control
                   type='number'
                   placeholder='Fill Stock Count'
@@ -205,7 +205,7 @@ const ProductEditScreen = ({ match, history }) => {
               </Form.Group>
 
               <Form.Group controlId='category'>
-                <Form.Label>Category</Form.Label>
+                <Form.Label className='sample'>Category :</Form.Label>
                 <Form.Control
                   type='text'
                   placeholder='Enter category'
@@ -215,7 +215,7 @@ const ProductEditScreen = ({ match, history }) => {
               </Form.Group>
 
               <Form.Group controlId='description'>
-                <Form.Label>Description</Form.Label>
+                <Form.Label className='sample'>Description :</Form.Label>
                 <Form.Control
                   type='text'
                   placeholder='Enter description'

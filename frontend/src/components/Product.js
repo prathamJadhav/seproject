@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import Rating from './Rating';
 
 const Product = ({ product }) => {
   return (
@@ -17,11 +16,18 @@ const Product = ({ product }) => {
           </Card.Title>
         </Link>
 
-        {/* <Card.Text as='div'>
-          <Rating value={product.rating} text={`${product.reviews} reviews`} />
-        </Card.Text> */}
+        <Card.Text as='h3'>
+          <i class='fas fa-rupee-sign'></i> {product.price}
+        </Card.Text>
 
-        <Card.Text as='h3'><i class='fas fa-rupee-sign'></i> {product.price}</Card.Text>
+        <footer >
+          
+          {product.isVerified ? (
+            <img src='https://img.icons8.com/fluent/30/000000/certificate--v2.png' />
+          ) : (
+            <></>
+          )}
+        </footer>
       </Card.Body>
     </Card>
   );

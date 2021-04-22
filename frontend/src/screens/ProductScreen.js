@@ -10,7 +10,6 @@ import {
   Button,
   Form,
 } from 'react-bootstrap';
-import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Meta from '../components/Meta';
@@ -126,7 +125,7 @@ const ProductScreen = ({ history, match }) => {
                           xmlns='http://www.w3.org/2000/svg'
                           width='16'
                           height='16'
-                          fill='currentColor'
+                          fill='green'
                           class='bi bi-shield-fill-check'
                           viewBox='0 0 16 16'
                         >
@@ -140,7 +139,7 @@ const ProductScreen = ({ history, match }) => {
                           xmlns='http://www.w3.org/2000/svg'
                           width='16'
                           height='16'
-                          fill='currentColor'
+                          fill='orange'
                           class='bi bi-exclamation-circle-fill'
                           viewBox='0 0 16 16'
                         >

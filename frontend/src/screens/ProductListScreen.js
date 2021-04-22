@@ -101,7 +101,6 @@ const ProductListScreen = ({ history, match }) => {
                     <th>CONDITION</th>
                     <th>PRICE</th>
 
-                    <th></th>
                   </tr>
                 ) : (
                   <tr>
@@ -111,7 +110,6 @@ const ProductListScreen = ({ history, match }) => {
                     <th>CONDITION</th>
                     <th>PRICE</th>
 
-                    <th></th>
                   </tr>
                 )}
               </thead>
@@ -138,6 +136,8 @@ const ProductListScreen = ({ history, match }) => {
                               <span class='sr-only'>Loading...</span>
                             </Button>
                           </LinkContainer>
+                          </td>
+                          <td>
                           <Button
                             variant='danger'
                             className='btn-sm'
@@ -168,6 +168,8 @@ const ProductListScreen = ({ history, match }) => {
                                 <span class='sr-only'>Loading...</span>
                               </Button>
                             </LinkContainer>
+                            </td>
+                          <td>
                             <Button
                               variant='danger'
                               className='btn-sm'
@@ -180,7 +182,6 @@ const ProductListScreen = ({ history, match }) => {
                       ))}
               </tbody>
             </Table>
-            <Paginate pages={pages} page={page} isAdmin={true} />
           </>
         )}
       </Container>

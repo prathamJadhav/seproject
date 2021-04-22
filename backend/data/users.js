@@ -22,9 +22,9 @@ const users = [
     isDM: false,
   },
   {
-    name: 'moderator',
+    name: 'moderator1',
     email: 'mod1@gmail.com',
-    profileImage: '/images/admin.png',
+    profileImage: '/images/mod.png',
     roomnumber: 'Office 2',
     password: bcrypt.hashSync('123456', 10),
     isAdmin: false,
@@ -34,7 +34,7 @@ const users = [
   {
     name: 'moderator2',
     email: 'mod2@gmail.com',
-    profileImage: '/images/admin.png',
+    profileImage: '/images/mod.png',
     roomnumber: 'Office 2',
     password: bcrypt.hashSync('123456', 10),
     isAdmin: false,
@@ -44,7 +44,7 @@ const users = [
   {
     name: 'Delievery Man 1',
     email: 'dm1@gmail.com',
-    profileImage: '/images/mod.png',
+    profileImage: '/imagesuser1.jpeg',
     roomnumber: 'Office 3',
     password: bcrypt.hashSync('123456', 10),
     isAdmin: false,
@@ -54,7 +54,7 @@ const users = [
   {
     name: 'Delievery Man 2',
     email: 'dm2@gmail.com',
-    profileImage: '/images/mod.png',
+    profileImage: '/images/user1.jpeg',
     roomnumber: 'Office 3',
     password: bcrypt.hashSync('123456', 10),
     isAdmin: false,
@@ -64,7 +64,7 @@ const users = [
   {
     name: 'User 1',
     email: 'user1@gmail.com',
-    profileImage: '/images/user1.jpeg',
+    profileImage: '/images/user1.png',
     roomnumber: 'Office 4',
     password: bcrypt.hashSync('123456', 10),
     isAdmin: false,
@@ -74,7 +74,7 @@ const users = [
   {
     name: 'User 2',
     email: 'user2@gmail.com',
-    profileImage: '/images/user2.jpeg',
+    profileImage: '/images/user2.png',
     roomnumber: 'Office 4',
     password: bcrypt.hashSync('123456', 10),
     isAdmin: false,
