@@ -51,6 +51,9 @@ h6 {
   padding: 1rem 0;
   color: chocolate;
 }
+h8 {
+  text-align: right;
+}
 
 h2 {
   font-size: 1.4rem;
@@ -84,7 +87,6 @@ h2 {
 .test3 {
   margin: right 20px;
   width: 50000px;
-
 }
 .field {
   width: 100%;
@@ -272,4 +274,12 @@ h2 {
   border-radius: 50%;
   width: 20px;
   height: 20px;
+}
+
+.custom {
+  border: 2px solid #F5F5F5;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom: none;
+  background-color: #F8F8F8;
 }

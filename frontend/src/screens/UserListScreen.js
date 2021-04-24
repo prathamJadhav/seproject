@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button, Container } from 'react-bootstrap';
+import { Table, Button, Container, Card, Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -31,98 +31,119 @@ const UserListScreen = ({ history }) => {
       dispatch(deleteUser(id));
     }
   };
-
   return (
     <>
       <Container className='test2'>
-        <h1>Users</h1>
         {loading ? (
           <Loader />
         ) : error ? (
           <Message variant='danger'>{error}</Message>
         ) : (
-          <Table striped bordered hover responsive className='table-sm'>
-            <thead className='sample'>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>EMAIL</th>
-                <th>Role</th>
-               
-              </tr>
-            </thead>
-            <tbody>
-              {userInfo.isAdmin
-                ? users.map((user) => (
-                    <tr key={user._id}>
-                      <td>{user._id}</td>
-                      <td>{user.name}</td>
-                      <td>
-                        <a href={`mailto:${user.email}`}>{user.email}</a>
-                      </td>
-                      <td>
-                        {user.isAdmin ? (
-                          <i
-                            class='fas fa-user-shield'
-                            style={{ color: 'purple' }}
-                          ></i>
-                        ) : user.isMod ? (
-                          <i
-                            class='fas fa-users-cog'
-                            style={{ color: 'deepskyblue' }}
-                          ></i>
-                        ) : user.isDM ? (
-                          <i
-                            class='fas fa-biking'
-                            style={{ color: 'forestgreen' }}
-                          ></i>
-                        ) : (
-                          <i
-                            class='fas fa-user-minus'
-                            style={{ color: 'red' }}
-                          ></i>
-                        )}
-                      </td>
-                      <td>
-                        <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                          <Button variant='light' className='btn-sm'>
-                            <i class='fa fa-cog fa-spin fa-2x fa-fw'></i>
-                            <span class='sr-only'>Loading...</span>
-                          </Button>
-                        </LinkContainer>
-                      </td>
-                      <td>
-                        <Button
-                          variant='danger'
-                          className='btn-sm'
-                          onClick={() => deleteHandler(user._id)}
-                        >
-                          <i class='far fa-trash-alt fa-2x'></i>
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                : users
-                    .filter((user) => user.isAdmin === false)
-                    .filter((user) => user.isMod === false)
-                    .map((user) => (
+          <Container>
+            <Container className='custom'>
+              <Row>
+                <Col>
+                  <h4>
+                    <i class='far fa-address-book fa-lg'></i> users
+                  </h4>
+                </Col>
+                <Col>
+                  <Row>
+                    <Col>
+                      <h6 class='text-right'>
+                        <i
+                          class='fas fa-user-shield fa-sm'
+                          style={{ color: 'purple' }}
+                        ></i>{' '}
+                        : &emsp;
+                        {users.filter((user) => user.isAdmin === true).length}
+                      </h6>
+                    </Col>
+                    <Col>
+                      <h6 class='text-right'>
+                        <i
+                          class='fas fa-users-cog'
+                          style={{ color: 'deepskyblue' }}
+                        ></i>{' '}
+                        : &emsp;
+                        {users.filter((user) => user.isMod === true).length}
+                      </h6>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <h6 class='text-right'>
+                        <i
+                          class='fas fa-biking'
+                          style={{ color: 'forestgreen' }}
+                        ></i>{' '}
+                        : &emsp;
+                        {users.filter((user) => user.isDM === true).length}
+                      </h6>
+                    </Col>
+                    <Col>
+                      <h6 class='text-right'>
+                        <i
+                          class='fas fa-user-minus'
+                          style={{ color: 'red' }}
+                        ></i>{' '}
+                        : &emsp;
+                        {
+                          users.filter(
+                            (user) =>
+                              user.isAdmin === false &&
+                              user.isMod === false &&
+                              user.isDM === false
+                          ).length
+                        }
+                      </h6>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Container>
+
+            <Table striped bordered hover responsive className='table-sm'>
+              <thead className='sample'>
+                <tr>
+                  <th>ID</th>
+                  <th>ID</th>
+                  <th>NAME</th>
+                  <th>EMAIL</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                {userInfo.isAdmin
+                  ? users.map((user) => (
                       <tr key={user._id}>
+                        <td>{users.length}</td>
                         <td>{user._id}</td>
                         <td>{user.name}</td>
                         <td>
                           <a href={`mailto:${user.email}`}>{user.email}</a>
                         </td>
                         <td>
-                         { user.isDM ? (
-                          <i
-                            class='fas fa-biking'
-                            style={{ color: 'green' }}
-                          ></i>
+                          {user.isAdmin ? (
+                            <i
+                              class='fas fa-user-shield'
+                              style={{ color: 'purple' }}
+                            ></i>
+                          ) : user.isMod ? (
+                            <i
+                              class='fas fa-users-cog'
+                              style={{ color: 'deepskyblue' }}
+                            ></i>
+                          ) : user.isDM ? (
+                            <i
+                              class='fas fa-biking'
+                              style={{ color: 'forestgreen' }}
+                            ></i>
                           ) : (
-                          <i
-                            class='fas fa-user-minus'
-                            style={{ color: 'red' }}
-                          ></i>
+                            <i
+                              class='fas fa-user-minus'
+                              style={{ color: 'red' }}
+                            ></i>
                           )}
                         </td>
                         <td>
@@ -143,9 +164,52 @@ const UserListScreen = ({ history }) => {
                           </Button>
                         </td>
                       </tr>
-                    ))}
-            </tbody>
-          </Table>
+                    ))
+                  : users
+                      .filter((user) => user.isAdmin === false)
+                      .filter((user) => user.isMod === false)
+                      .map((user) => (
+                        <tr key={user._id}>
+                          <td>{user._id}</td>
+                          <td>{user.name}</td>
+                          <td>
+                            <a href={`mailto:${user.email}`}>{user.email}</a>
+                          </td>
+                          <td>
+                            {user.isDM ? (
+                              <i
+                                class='fas fa-biking'
+                                style={{ color: 'green' }}
+                              ></i>
+                            ) : (
+                              <i
+                                class='fas fa-user-minus'
+                                style={{ color: 'red' }}
+                              ></i>
+                            )}
+                          </td>
+                          <td>
+                            <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                              <Button variant='light' className='btn-sm'>
+                                <i class='fa fa-cog fa-spin fa-2x fa-fw'></i>
+                                <span class='sr-only'>Loading...</span>
+                              </Button>
+                            </LinkContainer>
+                          </td>
+                          <td>
+                            <Button
+                              variant='danger'
+                              className='btn-sm'
+                              onClick={() => deleteHandler(user._id)}
+                            >
+                              <i class='far fa-trash-alt fa-2x'></i>
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+              </tbody>
+            </Table>
+          </Container>
         )}
       </Container>
     </>
