@@ -107,7 +107,6 @@ const UserListScreen = ({ history }) => {
               <thead className='sample'>
                 <tr>
                   <th>ID</th>
-                  <th>ID</th>
                   <th>NAME</th>
                   <th>EMAIL</th>
                   <th>Role</th>
@@ -117,7 +116,6 @@ const UserListScreen = ({ history }) => {
                 {userInfo.isAdmin
                   ? users.map((user) => (
                       <tr key={user._id}>
-                        <td>{users.length}</td>
                         <td>{user._id}</td>
                         <td>{user.name}</td>
                         <td>
