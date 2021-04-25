@@ -4,6 +4,7 @@ import { Table, Button, Row, Col, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import Paginate from '../components/Paginate';
 import {
   listProducts,
   deleteProduct,
@@ -12,7 +13,7 @@ import {
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 
 const ProductListScreen = ({ history, match }) => {
-  const pageNumber = match.params.pageNumber || 1;
+  const pageNumber = match.params.pageNumber || 36;
 
   const dispatch = useDispatch();
 
@@ -234,6 +235,12 @@ const ProductListScreen = ({ history, match }) => {
                       ))}
               </tbody>
             </Table>
+            {userInfo.isAdmin || userInfo.isMod ? (
+              <Paginate pages={pages} page={page} isAdmin={true} />
+            ) : (
+             <></>
+
+            )}
           </Container>
         )}
       </Container>
