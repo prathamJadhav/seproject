@@ -4,7 +4,6 @@ import { Table, Button, Row, Col, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import Paginate from '../components/Paginate';
 import {
   listProducts,
   deleteProduct,
@@ -70,16 +69,6 @@ const ProductListScreen = ({ history, match }) => {
   return (
     <>
       <Container className='test2'>
-        <Row className='align-items-center'>
-          <Col>
-            <h1>Products</h1>
-          </Col>
-          <Col className='text-right'>
-            <Button className='btn-circle' onClick={createProductHandler}>
-              <i class='fas fa-plus fa-2x '></i>
-            </Button>
-          </Col>
-        </Row>
         {loadingDelete && <Loader />}
         {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
         {loadingCreate && <Loader />}
@@ -89,7 +78,72 @@ const ProductListScreen = ({ history, match }) => {
         ) : error ? (
           <Message variant='danger'>{error}</Message>
         ) : (
-          <>
+          <Container>
+            <Container className='custom'>
+              <Row className='align-items-center'>
+                <Col>
+                  <Row>
+                    <h1>Products</h1>
+                  </Row>
+                  {userInfo.isAdmin || userInfo.isMod ? (
+                    <Row>
+                      <Col>
+                        <h6 class='text-left'>
+                          <i
+                            class='fas fa-shopping-basket'
+                            style={{ color: 'purple' }}
+                          ></i>{' '}
+                          : &emsp;
+                          {products.length}
+                        </h6>
+                      </Col>
+                      <Col>
+                        <h6 class='text-left'>
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='20'
+                            height='20'
+                            fill='green'
+                            class='bi bi-patch-check-fill'
+                            viewBox='0 0 16 16'
+                          >
+                            <path d='M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z' />
+                          </svg>
+                          &nbsp; : &emsp;
+                          {
+                            products.filter(
+                              (product) => product.isVerified === true
+                            ).length
+                          }
+                        </h6>
+                      </Col>
+                      <Col>
+                        <h6 class='text-left'>
+                          <i
+                            class='far fa-eye-slash'
+                            style={{ color: 'red' }}
+                          ></i>
+                          : &emsp;
+                          {
+                            products.filter(
+                              (product) => product.isVerified === false
+                            ).length
+                          }
+                        </h6>
+                      </Col>
+                    </Row>
+                  ) : (
+                    <></>
+                  )}
+                </Col>
+                <Col className='text-right'>
+                  <Button className='btn-circle' onClick={createProductHandler}>
+                    <i class='fas fa-plus fa-2x '></i>
+                  </Button>
+                </Col>
+              </Row>
+            </Container>
+
             <Table striped bordered hover responsive className='table-sm'>
               <thead className='sample'>
                 {userInfo.isAdmin || userInfo.isMod ? (
@@ -100,7 +154,6 @@ const ProductListScreen = ({ history, match }) => {
                     <th>CATEGORY</th>
                     <th>CONDITION</th>
                     <th>PRICE</th>
-
                   </tr>
                 ) : (
                   <tr>
@@ -109,7 +162,6 @@ const ProductListScreen = ({ history, match }) => {
                     <th>CATEGORY</th>
                     <th>CONDITION</th>
                     <th>PRICE</th>
-
                   </tr>
                 )}
               </thead>
@@ -136,8 +188,8 @@ const ProductListScreen = ({ history, match }) => {
                               <span class='sr-only'>Loading...</span>
                             </Button>
                           </LinkContainer>
-                          </td>
-                          <td>
+                        </td>
+                        <td>
                           <Button
                             variant='danger'
                             className='btn-sm'
@@ -168,7 +220,7 @@ const ProductListScreen = ({ history, match }) => {
                                 <span class='sr-only'>Loading...</span>
                               </Button>
                             </LinkContainer>
-                            </td>
+                          </td>
                           <td>
                             <Button
                               variant='danger'
@@ -182,7 +234,7 @@ const ProductListScreen = ({ history, match }) => {
                       ))}
               </tbody>
             </Table>
-          </>
+          </Container>
         )}
       </Container>
     </>
